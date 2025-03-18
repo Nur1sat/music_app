@@ -27,12 +27,11 @@ class _HomePageState extends State<HomePage> {
   bool isPlaying = false;
   double value = 0;
   final player = AudioPlayer();
-  Duration duration = Duration.zero; // Initialize to prevent null issues
+  Duration duration = Duration.zero;
 
   void initPlayer() async {
     await player.setSource(AssetSource("music.mp3"));
 
-    // Listen for changes in duration
     player.onDurationChanged.listen((Duration d) {
       setState(() {
         duration = d;
@@ -75,7 +74,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Ensure max value is at least 1.0 to avoid the assertion error
     double maxSliderValue =
         duration.inSeconds.toDouble() > 0 ? duration.inSeconds.toDouble() : 1.0;
 
@@ -171,7 +169,6 @@ class _HomePageState extends State<HomePage> {
                         if (isPlaying) {
                           await player.pause();
                         } else {
-                          // Try to resume, but if it fails (e.g. first play), use play instead
                           try {
                             await player.resume();
                           } catch (e) {
